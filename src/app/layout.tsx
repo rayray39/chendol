@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${JetBrainsMono.className} antialiased`}
+        className={`${JetBrainsMono.className} dark antialiased`}
       >
         {children}
       </body>
