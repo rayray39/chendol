@@ -1,3 +1,17 @@
+# Chendol AI
+Github REpository Summarisation and Storage (GRESS)
+
+## Overview
+LLM powered github repo summarisation via user-provided url. User simply provides the url of the public github repo and the app will call github's api to get the README of the repo. LLM will summarise the README. UI will also provide a way for the user to search through past summarisations. 
+
+## Key Functionalities
+1. LLM powered github repo summarisation via user-provided url.
+1. LLM document classifier - classifies the summarisations into broad categories (eg. research, tools, ai, python libraries etc.)
+1. Database to store summarisations (maybe supabase).
+1. single agent vs multi agent (summariser and classifier) workflow.
+
+***
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
