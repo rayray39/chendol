@@ -10,6 +10,25 @@ LLM powered github repo summarisation via user-provided url. User simply provide
 1. Database to store summarisations (maybe supabase).
 1. single agent vs multi agent (summariser and classifier) workflow.
 
+## github issues
+### sign in page
+1. integrate Supabase passwordless auth (email and OTP).
+1. create and store JWT, refresh token in user localstorage.
+1. server-side validation
+
+### summary page
+1. openrouter llm integration
+1. github api for fetching readme
+1. display summarisation results (what, how to use, demo and examples)
+
+### future work
+#### database
+1. supabase integration to store summarised results
+#### top results search
+1. keyword search top K repos from github (eg. keyword = "AI", return top K github repos related to AI and summarised them).
+#### database search 
+1. search through database for summarised results.
+
 ***
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
