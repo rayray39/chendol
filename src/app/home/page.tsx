@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { SetStateAction, useState } from "react"
 
 export default function Home() {
+    const [isDivAtBottom, setIsDivAtBottom] = useState<boolean>(false);
+
     // github url entered into the textarea
     const [githubUrl, setGithubUrl] = useState("");
 
@@ -15,13 +17,14 @@ export default function Home() {
 
     const handleSummariseButton = () => {
         console.log(`github repo url: ${githubUrl}`)
+        setIsDivAtBottom(true)
         setGithubUrl('');
     }
 
 
     return (
-        <div className="grid grid-cols-3 grid-rows-3 h-screen w-full ">
-            <FieldGroup className="col-start-2 row-start-2">
+        <div className='grid grid-cols-3 grid-rows-3 h-screen w-full'>
+            <FieldGroup className={`col-start-2 row-start-2 ${isDivAtBottom ? "translate-y-[32vh]" : "translate-y-0"} transition-all duration-2000 ease-in-out`}>
                 <Field>
                     <FieldLabel htmlFor="entered-url">Summarise a Github Repository</FieldLabel>
                     <FieldDescription>Enter the Github repo URL</FieldDescription>
