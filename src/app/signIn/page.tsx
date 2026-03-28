@@ -8,10 +8,14 @@ import { useRouter } from "next/navigation";
 
 
 export default function SignIn() {
+    // checks whether email is entered into text field
     const [isEmailEntered, setIsEmailEntered] = useState<boolean>(false);
+
+    // control inputs (email and otp)
     const [email, setEmail] = useState<string>('');
     const [otp, setOtp] = useState<string>('');
 
+    // checks whether email and otp are filled in before submitting
     const [isEmailEmptyOnSubmit, setIsEmailEmptyOnSubmit] = useState<boolean>(false);
     const [isOtpEmptyOnSubmit, setIsOtpEmptyOnSubmit] = useState<boolean>(false);
 
@@ -46,11 +50,13 @@ export default function SignIn() {
         event.preventDefault();
         // handle submit button clicked
         if (!email) {
+            // no email entered
             setIsEmailEmptyOnSubmit(true);
             setIsEmailEntered(false);
             return;
         }
         if (!otp) {
+            // no otp entered
             setIsOtpEmptyOnSubmit(true);
             return;
         }
