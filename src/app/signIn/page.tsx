@@ -37,6 +37,8 @@ export default function SignIn() {
         setOtp(event.target.value);
         if (event.target.value.length > 0) {
             setIsOtpEmptyOnSubmit(false);
+        } else {
+            setIsOtpEmptyOnSubmit(true);
         }
     }
 
