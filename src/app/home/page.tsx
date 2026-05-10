@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Textarea } from "@/components/ui/textarea"
 import { summariseGitHubRepo } from "@/app/services/apiSummariseService"
-import { SetStateAction, useState } from "react"
+import { useState } from "react"
+import { Spinner } from "@/components/ui/spinner"
+
 
 export default function Home() {
     // tracks the position of the div
@@ -23,6 +25,8 @@ export default function Home() {
 
     // summary generated 
     const [summary, setSummary] = useState<string>("");
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleTextareaChange = (event: { target: { value: string } }) => {
         const value = event.target.value;
@@ -52,18 +56,21 @@ export default function Home() {
             return;
         }
 
-        console.log(`github repo url: ${githubUrl}`)
         setIsDivAtBottom(true)
+        setIsLoading(true);
         try {
             // summariseGitHubRepo -> getGithubReadme + fetch(/summarise) -> fetch(/github_readme)
             const summaryResult = await summariseGitHubRepo(githubUrl);
             setSummary(summaryResult)
         } catch (error) {
             // print error message
-            setSummary("Failed to generate a summary, please try agin later.");
+            setSummary("Failed to generate a summary, please try again later.");
             console.log(error)
         } finally {
             setGithubUrl('');
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 3000);
         }
     }
 
@@ -71,7 +78,7 @@ export default function Home() {
     return (
         <div className='grid grid-cols-3 grid-rows-5 h-screen w-full'>
             <FieldGroup className="col-start-2 row-start-2">
-                <Field>
+                <Field className="text-sm">
                     {summary}
                 </Field>
             </FieldGroup>
@@ -101,7 +108,14 @@ export default function Home() {
                 </Field>
 
                 <Field>
-                    <Button className="cursor-pointer mb-8" onClick={handleSummariseButton}>Summarise</Button>
+                    {
+                        isLoading 
+                        ? <Button disabled className="cursor-pointer mb-8">
+                            <Spinner data-icon="inline-start" />
+                            Generating...
+                        </Button>
+                        : <Button className="cursor-pointer mb-8" onClick={handleSummariseButton}>Summarise</Button>
+                    }
                 </Field>
             </FieldGroup>
         </div>
