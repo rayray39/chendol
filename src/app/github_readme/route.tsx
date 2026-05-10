@@ -4,8 +4,9 @@ export async function POST(request: Request) {
 
     // split githubUrl into owner and repo names
 
-    var owner = 'anthropics'
-    var repo = 'financial-services'
+    const splitGithubUrl = githubUrl.split("/") 
+    const owner = splitGithubUrl[splitGithubUrl.length - 2]    // 2nd last elem is owner name
+    const repo = splitGithubUrl[splitGithubUrl.length - 1]     // last elem is owner name
 
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
         method: "GET",

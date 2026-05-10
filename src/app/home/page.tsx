@@ -55,6 +55,7 @@ export default function Home() {
         console.log(`github repo url: ${githubUrl}`)
         setIsDivAtBottom(true)
         try {
+            // summariseGitHubRepo -> getGithubReadme + fetch(/summarise) -> fetch(/github_readme)
             const summaryResult = await summariseGitHubRepo(githubUrl);
             setSummary(summaryResult)
         } catch (error) {
