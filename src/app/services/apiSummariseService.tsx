@@ -1,3 +1,5 @@
+import { getGithubReadme } from "@/app/services/apiGetGithubReadmeService"
+
 /**
  * API service for summarising GitHub repositories
  */
@@ -8,12 +10,14 @@
  * @returns The summary text from the API
  */
 export async function summariseGitHubRepo(githubUrl: string): Promise<string> {
+    const readmeContent = await getGithubReadme(githubUrl)
+
     const res = await fetch('/summarise', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ githubUrl })
+        body: JSON.stringify({ readmeContent })
     });
 
     const data = await res.json();
