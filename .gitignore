@@ -42,3 +42,6 @@ next-env.d.ts
 
 # cline
 .cline*
+
+# prompts
+src/app/prompts/
