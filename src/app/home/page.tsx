@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { summariseGitHubRepo } from "@/app/services/apiSummariseService"
 import { useState } from "react"
 import { Spinner } from "@/components/ui/spinner"
+import isSuspiciousGithubUrl from "./isSuspiciousGithubUrl"
 
 
 export default function Home() {
@@ -39,6 +40,7 @@ export default function Home() {
             setIsGithubUrlValid(true)
         } else {
             setIsGithubUrlEntered(false)
+            setIsGithubUrlValid(true)
             // setIsGithubUrlEmptyOnSubmit(false)
         }
     }
@@ -51,7 +53,8 @@ export default function Home() {
             return;
         }
         
-        if (!githubUrl.includes('github.com')) {
+        if (isSuspiciousGithubUrl(githubUrl)) {
+            console.log('url is suspicious')
             setIsGithubUrlValid(false);
             return;
         }
