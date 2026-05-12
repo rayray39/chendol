@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation";
 import isSuspiciousEmail from "./isSuspiciousEmail";
+import isSuspiciousOtp from "./isSuspiciousOtp";
 
 
 export default function SignIn() {
@@ -22,6 +23,9 @@ export default function SignIn() {
 
     // checks whether email is valid
     const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+
+    // checks whether otp is valid
+    const [isOtpValid, setIsOtpValid] = useState<boolean>(true);
 
     const router = useRouter();
 
@@ -42,9 +46,8 @@ export default function SignIn() {
         setOtp(event.target.value);
         if (event.target.value.length > 0) {
             setIsOtpEmptyOnSubmit(false);
-        } else {
-            setIsOtpEmptyOnSubmit(true);
         }
+        setIsOtpValid(true)
     }
 
     const handleGetOTP = () => {
@@ -72,7 +75,10 @@ export default function SignIn() {
             setIsEmailValid(false)
             return;
         }
-        // validate OTP before navigation
+        if (isSuspiciousOtp(otp)) {
+            setIsOtpValid(false)
+            return;
+        }
         router.push('/home')
         // setEmail('');
         // setOtp('');
@@ -100,7 +106,7 @@ export default function SignIn() {
                 }
             </Field>
 
-            <Field data-invalid={isOtpEmptyOnSubmit}>
+            <Field data-invalid={isOtpEmptyOnSubmit || !isOtpValid}>
                 <FieldLabel htmlFor="sign-in-otp">One-Time-Password</FieldLabel>
                 <Input
                     id="sign-in-otp" 
@@ -108,14 +114,15 @@ export default function SignIn() {
                     placeholder="Enter OTP" 
                     value={otp}
                     onChange={handleOtpChange}
-                    aria-invalid={isOtpEmptyOnSubmit}
+                    aria-invalid={isOtpEmptyOnSubmit || !isOtpValid}
                 />
                 {
                     isOtpEmptyOnSubmit ? 
                     <FieldDescription>
                         OTP cannot be empty.
-                    </FieldDescription> :
-                    null
+                    </FieldDescription> : (
+                        isOtpValid ? null : <FieldDescription>Invalid OTP, please try again later.</FieldDescription>
+                    )
                 }
             </Field>
 
