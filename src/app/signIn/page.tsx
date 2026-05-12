@@ -5,6 +5,7 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui
 import { Button } from "@/components/ui/button"
 import { SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation";
+import isSuspiciousEmail from "./isSuspiciousEmail";
 
 
 export default function SignIn() {
@@ -23,28 +24,6 @@ export default function SignIn() {
     const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
 
     const router = useRouter();
-
-    const suspiciousEmail = (email:string) => {
-        // dragonhunter@gmail.com
-        const trimmed_email = email.trim()  // remove any trailing and leading whitespaces
-        if (trimmed_email.split(" ").length > 1) {
-            // eg. 'dragonhunter@gmail.com random_text other_random_text' 
-            return true;
-        }
-        if (!trimmed_email.includes("@")) {
-            return true;
-        }
-        // perform checks on username
-        const userEmailUsername = trimmed_email.split("@")[0]   // dragonhunter
-        // perform checks on domain
-        const userEmailDomain = trimmed_email.split("@")[1]     // gmail.com
-        const commonEmailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com']
-        if (!commonEmailDomains.includes(userEmailDomain)) {
-            return true
-        }
-
-        return false
-    }
 
     const handleEmailChange = (event: { target: { value: SetStateAction<string>; }; }) => {
         // handle email input change
@@ -89,7 +68,7 @@ export default function SignIn() {
             return;
         }
         console.log(`entered email: ${email}`);
-        if (suspiciousEmail(email)) {
+        if (isSuspiciousEmail(email)) {
             setIsEmailValid(false)
             return;
         }
