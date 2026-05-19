@@ -33,8 +33,7 @@ export async function POST(request: Request) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "model": "google/gemma-4-31b-it:free",
-            // "model": "google/gemma-4-26b-a4b-it:free",
+            "model": "meta-llama/llama-3.2-3b-instruct:free",
             "messages": [
                 {
                     "role": "user",
