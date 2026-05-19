@@ -7,6 +7,7 @@ import { summariseGitHubRepo } from "@/app/services/apiSummariseService"
 import { useState } from "react"
 import { Spinner } from "@/components/ui/spinner"
 import isSuspiciousGithubUrl from "./isSuspiciousGithubUrl"
+import { Test } from "../services/apiTest"
 
 
 export default function Home() {
@@ -63,8 +64,11 @@ export default function Home() {
         setIsLoading(true);
         try {
             // summariseGitHubRepo -> getGithubReadme + fetch(/summarise) -> fetch(/github_readme)
-            const summaryResult = await summariseGitHubRepo(githubUrl);
-            setSummary(summaryResult)
+            // const summaryResult = await summariseGitHubRepo(githubUrl);
+            // setSummary(summaryResult)
+
+            const testingPayload = await Test();
+            setSummary(testingPayload.message)
         } catch (error) {
             // print error message
             setSummary("Failed to generate a summary, please try again later.");
